@@ -57,23 +57,30 @@ function do_ajax_query(){
     let order_by = $('#order_by option:selected').val();
     let sort_order = $('#sort_order option:selected').val();
 
+    let filterInputs = '';
+    if (id != '') filterInputs += "&id=" + id;
+    if (string_field != '') filterInputs += '&string_field=' + string_field;
+    if (boolean_field != '') filterInputs += '&boolean_field=' + boolean_field;
+    if (decimal_field != '') filterInputs +='&decimal_field=' + decimal_field;
+    if (timestamp_field_from != '') filterInputs += '&timestamp_field_from=' + timestamp_field_from;
+    if (timestamp_field_to != '') filterInputs += '&timestamp_field_to=' + timestamp_field_to;
+    if (order_by != '') filterInputs += '&order_by=' + order_by;
+    if (sort_order != '') filterInputs += '&sort_order=' + sort_order;
+    if (paginatePage != '') filterInputs += '&current_page=' + paginatePage;
+
 
     $.ajax({
         type: "GET",
         url: "/filter-fields",
 
-        data: "id=" + id + '&string_field=' + string_field + '&boolean_field=' + boolean_field + '&decimal_field='
-        + decimal_field + '&timestamp_field_from=' + timestamp_field_from + '&timestamp_field_to=' + timestamp_field_to
-        + '&order_by=' + order_by + '&sort_order=' + sort_order + '&current_page=' + paginatePage,
+        data: filterInputs,
         headers: {
             'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
         },
         success: function (data) {
 
             //added inputs to url
-            history.pushState(null, '', '/?id=' + id + '&string_field=' + string_field + '&boolean_field=' + boolean_field + '&decimal_field='
-                + decimal_field + '&timestamp_field_from=' + timestamp_field_from + '&timestamp_field_to=' + timestamp_field_to
-                + '&order_by=' + order_by + '&sort_order=' + sort_order + '&current_page=' + paginatePage);
+            history.pushState(null, '', '/?' + filterInputs);
 
             $('.for-ajax').html(data);
             let allPages = $('div#all-pages');
