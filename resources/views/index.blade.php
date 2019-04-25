@@ -58,13 +58,13 @@
                         <td>
                             <select name="boolean_field" id="boolean_field" class="form-control">
                                 <option value="">Select type</option>
-                                <option @if(!empty($inputs['string_field']) && $inputs['boolean_field'] == 1) selected @endif value="1">True</option>
-                                <option @if(!empty($inputs['string_field']) && $inputs['boolean_field'] == 2) selected @endif value="2">False</option>
+                                <option @if(!empty($inputs['boolean_field']) && $inputs['boolean_field'] == 1) selected @endif value="1">True</option>
+                                <option @if(!empty($inputs['boolean_field']) && $inputs['boolean_field'] == 2) selected @endif value="2">False</option>
                             </select>
                         </td>
                         <td>Decimal Field</td>
                         <td>
-                            <input type="text" class="form-control" name="decimal_field" value="{{$inputs['string_field'] ?? ''}}">
+                            <input type="text" class="form-control" name="decimal_field" value="{{$inputs['decimal_field'] ?? ''}}">
                         </td>
                     </tr>
 
