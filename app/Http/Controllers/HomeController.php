@@ -11,21 +11,24 @@ class HomeController extends Controller
 {
 
     /** Main page
+     * @param TestRequest $request
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
-    public function index()
+    public function index(TestRequest $request)
     {
-        $fields = DB::select('SELECT * FROM test ORDER BY id LIMIT 25');
-        $currentPage = 1;
-        $allFields = $this->getCountFields('SELECT * FROM test') ?? Test::ALL_TEST_FIELDS;
-        $allPages = round($allFields / Test::COUNT_PAGINATE);
-        return view('index', compact('fields', 'allFields', 'allPages', 'currentPage'));
+        $inputs = $request->all();
+        $dbQuery = $this->getFilteredFields($request);
+        $fields = $dbQuery['fields'];
+        $currentPage = $dbQuery['currentPage'];
+        $allFields = $dbQuery['allFields'];
+        $allPages = $dbQuery['allPages'];
+        return view('index', compact('fields', 'allFields', 'allPages', 'currentPage', 'inputs'));
 
     }
 
     /** Function for handling ajax request
      * @param TestRequest|Request $request
-     * @return \Illuminate\Http\JsonResponse
+     * @return array
      */
     public function getFilteredFields(TestRequest $request)
     {
@@ -79,10 +82,25 @@ class HomeController extends Controller
         $searchFrom = ($currentPage - 1) * Test::COUNT_PAGINATE;
         $allPages = ceil($allFields / Test::COUNT_PAGINATE);
 
-        $sql .= ' ORDER BY ' . $request->order_by . ' ' . $request->sort_order .' LIMIT ' . $searchFrom . ', ' . Test::COUNT_PAGINATE;
+        $sql .= ' ORDER BY ' . ($request->order_by ?? 'id') . ' ' . ($request->sort_order ?? 'asc') .' LIMIT ' . $searchFrom . ', ' . Test::COUNT_PAGINATE;
         $fields = DB::select($sql, $params);
 
-        return view('fields', compact('fields', 'allFields', 'currentPage', 'allPages'));
+        if ($request->ajax()) {
+            return view('fields', [
+                'fields' => $fields,
+                'allFields' => $allFields,
+                'allPages' => $allPages,
+                'currentPage' => $currentPage,
+            ]);
+        } else {
+            return [
+                'fields' => $fields,
+                'allFields' => $allFields,
+                'allPages' => $allPages,
+                'currentPage' => $currentPage,
+            ];
+        }
+
 
     }
 

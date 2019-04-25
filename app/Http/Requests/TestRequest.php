@@ -23,8 +23,8 @@ class TestRequest extends FormRequest
             'timestamp_field_from' => 'nullable|date',
             'timestamp_field_to' => 'nullable|date',
             'current_page' => 'nullable|integer',
-            'order_by' => 'required|in:id,string_field,boolean_field,decimal_field,timestamp_field',
-            'sort_order' => 'required|in:desc,asc',
+            'order_by' => 'nullable|in:id,string_field,boolean_field,decimal_field,timestamp_field',
+            'sort_order' => 'nullable|in:desc,asc',
         ];
     }
 }

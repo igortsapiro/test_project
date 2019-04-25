@@ -69,6 +69,12 @@ function do_ajax_query(){
             'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
         },
         success: function (data) {
+
+            //added inputs to url
+            history.pushState(null, '', '/?id=' + id + '&string_field=' + string_field + '&boolean_field=' + boolean_field + '&decimal_field='
+                + decimal_field + '&timestamp_field_from=' + timestamp_field_from + '&timestamp_field_to=' + timestamp_field_to
+                + '&order_by=' + order_by + '&sort_order=' + sort_order + '&current_page=' + paginatePage);
+
             $('.for-ajax').html(data);
             let allPages = $('div#all-pages');
 

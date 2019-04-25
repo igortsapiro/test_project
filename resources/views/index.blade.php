@@ -33,7 +33,7 @@
         <!-- Filter form -->
         <div class="container mt-5 mb-5">
 
-            <form action="#" method="get" id="filter">
+            <form action="/" method="get" id="filter">
                 <table class="table table-condensed table-bordered table-hover table-sm">
                     <tr>
                         <th>Name</th>
@@ -45,11 +45,11 @@
                     <tr>
                         <td>Id</td>
                         <td>
-                            <input type="text" class="form-control" name="id">
+                            <input type="text" class="form-control" name="id" value="{{$inputs['id'] ?? ''}}">
                         </td>
                         <td>String Field</td>
                         <td>
-                            <input type="text" class="form-control" name="string_field">
+                            <input type="text" class="form-control" name="string_field" value="{{$inputs['string_field'] ?? ''}}">
                         </td>
                     </tr>
 
@@ -58,24 +58,24 @@
                         <td>
                             <select name="boolean_field" id="boolean_field" class="form-control">
                                 <option value="">Select type</option>
-                                <option value="1">True</option>
-                                <option value="2">False</option>
+                                <option @if(!empty($inputs['string_field']) && $inputs['boolean_field'] == 1) selected @endif value="1">True</option>
+                                <option @if(!empty($inputs['string_field']) && $inputs['boolean_field'] == 2) selected @endif value="2">False</option>
                             </select>
                         </td>
                         <td>Decimal Field</td>
                         <td>
-                            <input type="text" class="form-control" name="decimal_field">
+                            <input type="text" class="form-control" name="decimal_field" value="{{$inputs['string_field'] ?? ''}}">
                         </td>
                     </tr>
 
                     <tr>
                         <td>Timestamp Field From</td>
                         <td>
-                            <input type="datetime-local" class="form-control" name="timestamp_field_from">
+                            <input type="datetime-local" class="form-control" name="timestamp_field_from" value="{{$inputs['timestamp_field_from'] ?? ''}}">
                         </td>
                         <td>Timestamp Field To</td>
                         <td>
-                            <input type="datetime-local" class="form-control" name="timestamp_field_to">
+                            <input type="datetime-local" class="form-control" name="timestamp_field_to" value="{{$inputs['timestamp_field_to'] ?? ''}}">
                         </td>
                     </tr>
 
@@ -84,17 +84,17 @@
                         <td>
                             <select name="order_by" id="order_by" class="form-control">
                                 <option selected value="id">Id</option>
-                                <option value="string_field">String Field</option>
-                                <option value="boolean_field">Boolean Field</option>
-                                <option value="decimal_field">Decimal Field</option>
-                                <option value="timestamp_field">Timestamp Field</option>
+                                <option @if(!empty($inputs['order_by']) && $inputs['order_by'] == 'string_field') selected @endif value="string_field">String Field</option>
+                                <option @if(!empty($inputs['order_by']) && $inputs['order_by'] == 'boolean_field') selected @endif value="boolean_field">Boolean Field</option>
+                                <option @if(!empty($inputs['order_by']) && $inputs['order_by'] == 'decimal_field') selected @endif value="decimal_field">Decimal Field</option>
+                                <option @if(!empty($inputs['order_by']) && $inputs['order_by'] == 'timestamp_field') selected @endif value="timestamp_field">Timestamp Field</option>
                             </select>
                         </td>
                         <td>Sort Order</td>
                         <td>
                             <select name="sort_order" id="sort_order" class="form-control">
-                                <option value="desc">Descending</option>
-                                <option selected value="asc">Ascending</option>
+                                <option @if(!empty($inputs['sort_order']) && $inputs['sort_order'] == 'desc') selected @endif value="desc">Descending</option>
+                                <option @if(!empty($inputs['sort_order']) && $inputs['sort_order'] == 'asc') selected @endif value="asc">Ascending</option>
                             </select>
                         </td>
                     </tr>
