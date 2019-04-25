@@ -1,7 +1,6 @@
 <?php
 
-use App\User;
-use Illuminate\Support\Str;
+use App\Test;
 use Faker\Generator as Faker;
 
 /*
@@ -15,12 +14,11 @@ use Faker\Generator as Faker;
 |
 */
 
-$factory->define(User::class, function (Faker $faker) {
+$factory->define(Test::class, function (Faker $faker) {
     return [
-        'name' => $faker->name,
-        'email' => $faker->unique()->safeEmail,
-        'email_verified_at' => now(),
-        'password' => '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', // password
-        'remember_token' => Str::random(10),
+        'string_field' => $faker->words(3, true),
+        'boolean_field' => $faker->boolean(),
+        'decimal_field' => $faker->randomFloat(3),
+        'timestamp_field' => $faker->dateTimeBetween('-10 years', 'now'), // password
     ];
 });
